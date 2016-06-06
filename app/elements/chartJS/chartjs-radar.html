@@ -1,0 +1,62 @@
+
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+
+<script src="../../bower_components/Chart.js/dist/Chart.min.js"></script>
+
+<dom-module id="chartjs-radar">
+  <template>
+    <style include="shared-styles">
+      :host {
+        display: block;
+      }
+    </style>
+
+    <h2 class="page-title">chartjs-radar</h2>    
+    <canvas id="{{idCanvas}}"></canvas>
+    
+  </template>
+
+  <script>
+    (function() {
+      'use strict';
+
+      Polymer({
+        is: 'chartjs-radar',
+        properties: {
+    	 idCanvas: {
+            type: String,
+            value: function(){
+              return 'chartjs-radar' + new Date().getTime()
+            }
+          },
+          data: {
+          	type: Object,
+          	value: function(){
+              return {
+                labels: ["Eating", "Drinking", "Sleeping", "Designing", "Coding", "Cycling", "Running"],
+                datasets: [{
+                    label: "My First dataset",
+                    data: [65, 59, 90, 81, 56, 55, 40]
+                  },{
+                    label: "My Second dataset",
+                    data: [28, 48, 40, 19, 96, 27, 100]
+                  }]
+              };              
+          	}
+          }
+        },
+        context: null,
+        chart: null,
+        attached: function(){
+
+    			this.context = document.getElementById(this.idCanvas);
+    			this.chart = new Chart(this.context, {
+    			   type: 'radar',
+    			   data: this.data
+    			});
+        }
+
+      });
+    })();
+  </script>
+</dom-module>

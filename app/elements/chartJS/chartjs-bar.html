@@ -1,0 +1,61 @@
+
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+
+<script src="../../bower_components/Chart.js/dist/Chart.min.js"></script>
+
+<dom-module id="chartjs-bar">
+  <template>
+    <style include="shared-styles">
+      :host {
+        display: block;
+      }
+    </style>
+
+    <h2 class="page-title">chartjs-bar</h2>
+    <canvas id="{{idCanvas}}"></canvas>
+
+  </template>
+
+  <script>
+    (function() {
+      'use strict';
+
+      Polymer({
+        is: 'chartjs-bar',
+        properties: {
+          idCanvas: {
+            type: String,
+            value: function(){
+              return 'chartjs-bar' + new Date().getTime()
+            }
+          },
+          data: {
+          	type: Object,
+          	value: function(){
+          		return {
+                labels: ["January", "February", "March", "April", "May", "June", "July"],
+                datasets: [
+                    {
+                        label: "Dataset",                        
+                        data: [65, 59, 80, 81, 56, 55, 40,23]
+                    }
+                  ]
+                };
+          	}
+          }
+        },        
+        context: null,
+        chart: null,
+        attached: function(){          
+    			this.context = document.getElementById(this.idCanvas);
+    			this.chart = new Chart(this.context, {
+    			     type: 'bar',
+               data: this.data
+               
+    			});
+        }
+
+      });
+    })();
+  </script>
+</dom-module>

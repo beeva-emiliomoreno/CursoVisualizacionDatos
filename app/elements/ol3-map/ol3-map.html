@@ -1,0 +1,173 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/paper-styles/typography.html">
+
+<script src="../../bower_components/ol3/ol.js"></script>
+<link rel="stylesheet" href="../../bower_components/ol3/ol.css" type="text/css">
+
+<dom-module id="ol3-map">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+
+    </style>
+
+	 <paper-material elevation="1">
+
+	 	<paper-toolbar>
+			<div class="title">[[title]]</div>
+
+			<paper-menu-button>
+			  <paper-icon-button icon="communication:location-on" class="dropdown-trigger">Layers</paper-icon-button>
+			  <paper-menu class="dropdown-content">
+			    <template is="dom-repeat" items="[[locations]]" as="location">
+	                <paper-item>
+	                	<iron-icon icon="communication:location-on"></iron-icon>
+	                	[[location.place]]
+	                </paper-item>
+	              </template>
+			  </paper-menu>
+			</paper-menu-button>
+
+			<paper-button><iron-icon icon="icons:settings"></iron-icon></paper-button>
+			<paper-button><iron-icon icon="image:camera"></iron-icon></paper-button>
+			<paper-button><iron-icon icon="icons:fullscreen"></iron-icon></paper-button>
+		</paper-toolbar>
+
+		<div id="map" class="ol3-map" style="height: [[height]]px;">
+		</div>
+
+		<paper-toolbar>
+
+			<paper-dropdown-menu label="Tile Layers" vertical-align="bottom" horizontal-align="left">
+			  <paper-listbox class="dropdown-content">
+				  <!--<template is="dom-repeat" items="[[tiles]]" as="tile">
+	                <paper-item>{{tile}}</paper-item>
+	              </template>-->
+			  </paper-listbox>
+			</paper-dropdown-menu>
+
+			<div class="title"></div>
+
+  			<paper-dropdown-menu label="Vector Layers" vertical-align="bottom" horizontal-align="left">
+
+			  <paper-listbox class="dropdown-content">
+			    <!--<template is="dom-repeat" items="[[layers]]" as="layer">
+	                <paper-item>{{layer}}</paper-item>
+	              </template>-->
+			  </paper-listbox>
+			</paper-dropdown-menu>
+			<span></span>
+
+		</paper-toolbar>
+
+	</paper-material>
+	
+  </template>
+
+  <script>
+    (function(){
+      'use strict';
+
+      Polymer({
+        is: 'ol3-map',
+        properties: {
+			height: {
+				type: Number,
+				value: function(){
+					return 400;
+				},
+				notify:true
+			},
+			title: {
+				type: String,
+				value:'Open Layers 3 Map',
+				notify:true
+			},
+			locations: {
+				type: Array,
+				notify: true,
+				value: function(){
+
+					return [{
+							place: 'Londres',
+							position: [-0.12755, 51.507222]
+						},{
+							place: 'Roma',
+							position: [12.5, 41.9]
+						},{
+							place: 'Madrid',
+							position: [-3.683333, 40.4]
+						},{
+							place: 'Berlin',
+							position: [-3.683333, 40.4]
+						}
+					];
+				}
+			},
+			tiles: {
+				type: Array,
+				notify: true,
+				value: function(){
+					return [
+					    new ol.layer.Tile({
+					      name: 'Statemen',
+					      source: new ol.source.Stamen({
+					        layer: 'watercolor'
+					      })
+					    }),
+					    new ol.layer.Tile({
+					      name: 'Statemen-Terrain Labels',
+					      source: new ol.source.Stamen({
+					        layer: 'terrain-labels'
+					      })
+					    })
+					]
+				}
+			},
+			map: {
+				type: Object,
+				value: function(){
+					return null;
+				}
+			}
+    	},
+
+        ready: function() {
+	    	
+        },
+        attached: function(){
+
+        	this.map = new ol.Map({
+			  layers: [],			  
+			  target: 'map',
+			  view: new ol.View({
+			    center: ol.proj.transform(
+			        [-122.416667, 37.783333], 'EPSG:4326', 'EPSG:3857'),
+			    zoom: 12
+			  })
+			});
+			setTimeout(function(){ this.render(); }.bind(this), 100);
+        },
+
+        addMapTiles: function(){
+
+        	this.tiles.forEach(function(mapTile) {
+				this.map.addLayer(mapTile);
+			}, this);
+
+        },
+
+        render: function(){
+        	debugger;
+
+        	this.addMapTiles();
+
+        	this.map.updateSize();
+        }
+
+      });
+    })();
+  </script>
+</dom-module>

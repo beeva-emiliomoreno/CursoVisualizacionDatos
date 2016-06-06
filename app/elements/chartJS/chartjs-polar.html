@@ -1,0 +1,78 @@
+
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+
+<script src="../../bower_components/Chart.js/dist/Chart.min.js"></script>
+
+<dom-module id="chartjs-polar">
+  <template>
+    <style include="shared-styles">
+      :host {
+        display: block;
+      }
+    </style>
+
+    <h2 class="page-title">chartjs-polar</h2>
+    <canvas id="{{idCanvas}}"></canvas>
+
+  </template>
+
+  <script>
+    (function() {
+      'use strict';
+
+      Polymer({
+        is: 'chartjs-polar',
+        properties: {
+          idCanvas: {
+            type: String,
+            value: function(){
+              return 'chartjs-polar' + new Date().getTime()
+            }
+          },
+          data: {
+          	type: Object,
+          	value: function(){
+          		return {
+                  datasets: [{
+                      data: [
+                          11,
+                          16,
+                          7,
+                          3,
+                          14
+                      ],
+                      backgroundColor: [
+                          "#DDD",
+                          "#AAA",
+                          "#999",
+                          "#777",
+                          "#555"
+                      ],
+                      label: 'Dataset' 
+                  }],
+                  labels: [
+                      "A",
+                      "B",
+                      "C",
+                      "D",
+                      "E"
+                  ]
+              };
+          	}
+          }
+        },       
+        context: null,
+        chart: null,
+        attached: function(){          
+    			this.context = document.getElementById(this.idCanvas);
+    			this.chart = new Chart(this.context, {
+    			     type: 'polarArea',
+               data: this.data
+               
+    			});
+        }
+
+      });
+    })();
+  </script>
+</dom-module>

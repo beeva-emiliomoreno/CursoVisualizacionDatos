@@ -1,0 +1,73 @@
+
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+
+<script src="../../bower_components/Chart.js/dist/Chart.min.js"></script>
+
+<dom-module id="chartjs-pie">
+  <template>
+    <style include="shared-styles">
+      :host {
+        display: block;
+      }
+    </style>
+
+    <h2 class="page-title">chartjs-pie</h2>    
+    <canvas id="{{idCanvas}}"></canvas>
+    
+  </template>
+
+  <script>
+    (function() {
+      'use strict';
+
+      Polymer({
+        is: 'chartjs-pie',
+        properties: {
+    	 idCanvas: {
+            type: String,
+            value: function(){
+              return 'chartjs-pie' + new Date().getTime()
+            }
+          },
+          data: {
+          	type: Object,
+          	value: function(){
+          	   return {
+                    labels: [
+                        "A",
+                        "B",
+                        "C"
+                    ],
+                    datasets: [
+                        {
+                            data: [300, 50, 100],
+                            backgroundColor: [
+                                "#999",
+                                "#666",
+                                "#333"
+                            ],
+                            hoverBackgroundColor: [
+                                "#999",
+                                "#666",
+                                "#333"
+                            ]
+                        }]
+                };
+          	}
+          }
+        },
+        context: null,
+        chart: null,
+        attached: function(){
+
+    			this.context = document.getElementById(this.idCanvas);
+    			this.chart = new Chart(this.context, {
+    			    type: 'pie',
+    			    data: this.data
+    			});
+        }
+
+      });
+    })();
+  </script>
+</dom-module>

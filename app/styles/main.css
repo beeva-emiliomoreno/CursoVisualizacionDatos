@@ -1,0 +1,93 @@
+/*
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+*/
+
+body {
+  background: #fafafa;
+  font-family: 'Roboto', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  color: #333;
+}
+.content {
+  height: auto !important;
+}
+
+h2{
+    font-family: 'Roboto', 'Noto', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    font-size: 45px;
+    font-weight: 400;
+    letter-spacing: -.018em;
+    line-height: 48px;
+  }
+
+
+.paper-toolbar-0 {
+    background: black;
+    color: #ffffff;
+}
+
+
+ .paper-toolba {
+  -webkit-animation: neon3 1.5s ease-in-out infinite alternate;
+  -moz-animation: neon3 1.5s ease-in-out infinite alternate;
+  animation: neon3 1.5s ease-in-out infinite alternate;
+}
+
+@keyframes neon3 {
+  from {
+    text-shadow: none;
+  }
+  to {
+   text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #fff;
+  }
+}
+
+.paper-menu-0 {
+     color: #333;
+     padding:0px;
+     outline: none;
+     
+ 
+}
+
+.paper-menu-0 a{
+  min-height: none !important;
+}
+
+.paper-menu-0 .selectable-content.paper-menu > *:focus:after {
+    background: white;
+}
+
+.paper-menu-0 .selectable-content.paper-menu > .iron-selected {
+    font-weight: bold;
+    color: black;
+    font-weight: bold;
+}
+
+.paper-item-0{
+  outline: none;  
+  padding: 4px 12px;
+}
+
+.paper-menu iron-icon{
+    opacity: 1 !important;   
+    margin-right: 8px !important; 
+}
+
+ .iron-icon-big {
+    height: 45px;
+    width: 45px;
+  }
+
+  .paper-input-container-0 .input-content.paper-input-container label, .paper-input-container-0 .input-content.paper-input-container .paper-input-label {
+    color: white;
+  }
+  .paper-input-container-0 .input-content.paper-input-container input, .paper-input-container-0 .input-content.paper-input-container textarea, .paper-input-container-0 .input-content.paper-input-container iron-autogrow-textarea, .paper-input-container-0 .input-content.paper-input-container .paper-input-input{
+   color: white; 
+  }
+  

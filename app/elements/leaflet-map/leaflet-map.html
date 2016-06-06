@@ -1,0 +1,162 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/paper-styles/typography.html">
+
+<script src="../../bower_components/leaflet/dist/leaflet.js"></script>
+<link rel="stylesheet" href="../../bower_components/leaflet/dist/leaflet.css" type="text/css"> 
+
+<dom-module id="leaflet-map">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+
+    </style>
+
+	 <paper-material elevation="1">
+
+	 	<paper-toolbar>
+			<div class="title">[[title]]</div>
+
+			<paper-menu-button>
+			  <paper-icon-button icon="communication:location-on" class="dropdown-trigger">Layers</paper-icon-button>
+			  <paper-menu class="dropdown-content">
+			    <template is="dom-repeat" items="[[locations]]" as="location">
+	                <paper-item>
+	                	<iron-icon icon="communication:location-on"></iron-icon>
+	                	[[location.place]]
+	                </paper-item>
+	              </template>
+			  </paper-menu>
+			</paper-menu-button>
+
+			<paper-button><iron-icon icon="icons:settings"></iron-icon></paper-button>
+			<paper-button><iron-icon icon="image:camera"></iron-icon></paper-button>
+			<paper-button><iron-icon icon="icons:fullscreen"></iron-icon></paper-button>
+		</paper-toolbar>
+
+		<div id="{{mapContainer}}" class="ol3-map" style="height: [[height]]px;">
+		</div>
+
+		<paper-toolbar>
+
+			<paper-dropdown-menu label="Tile Layers" vertical-align="bottom" horizontal-align="left">
+			  <paper-listbox class="dropdown-content">
+				 
+			  </paper-listbox>
+			</paper-dropdown-menu>
+
+			<div class="title"></div>
+
+  			<paper-dropdown-menu label="Vector Layers" vertical-align="bottom" horizontal-align="left">
+			 
+			</paper-dropdown-menu>
+			<span></span>
+
+		</paper-toolbar>
+
+	</paper-material>
+	
+  </template>
+
+  <script>
+    (function(){
+      'use strict';
+
+      Polymer({
+        is: 'leaflet-map',
+        properties: {
+        	mapContainer: {
+        		type: String,
+        		value: function(){
+        			return 'mapContainer' + new Date().getTime();
+        		},
+        		notify:true
+        	},
+			height: {
+				type: Number,
+				value: function(){
+					return 400;
+				},
+				notify:true
+			},
+			title: {
+				type: String,
+				value:'Leaflet Map',
+				notify:true
+			},
+			locations: {
+				type: Array,
+				notify: true,
+				value: function(){
+
+					return [{
+							place: 'Londres',
+							position: [-0.12755, 51.507222]
+						},{
+							place: 'Roma',
+							position: [12.5, 41.9]
+						},{
+							place: 'Madrid',
+							position: [-3.683333, 40.4]
+						},{
+							place: 'Berlin',
+							position: [-3.683333, 40.4]
+						}
+					];
+				}
+			},
+			tiles: {
+				type: Array,
+				notify: true,
+				value: function(){
+					return [
+					    new ol.layer.Tile({
+					      name: 'Statemen',
+					      source: new ol.source.Stamen({
+					        layer: 'watercolor'
+					      })
+					    }),
+					    new ol.layer.Tile({
+					      name: 'Statemen-Terrain Labels',
+					      source: new ol.source.Stamen({
+					        layer: 'terrain-labels'
+					      })
+					    })
+					]
+				}
+			},
+			map: {
+				type: Object,
+				value: function(){
+					return null;
+				}
+			}
+    	},
+
+        ready: function() {
+	    	
+        },
+        attached: function(){
+        	
+			setTimeout(function(){ this.render(); }.bind(this), 100);		
+        },
+
+        render: function(){
+        	
+
+        	this.map = L.map(this.mapContainer).setView([51.505, -0.09], 13);      
+
+			var Stamen_Toner = L.tileLayer('http://stamen-tiles-{s}.a.ssl.fastly.net/toner/{z}/{x}/{y}.{ext}', {
+				attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+				subdomains: 'abcd',
+				minZoom: 0,
+				maxZoom: 20,
+				ext: 'png'
+			}).addTo(this.map);
+        }
+
+      });
+    })();
+  </script>
+</dom-module>
